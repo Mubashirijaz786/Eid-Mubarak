@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eid Mubarak 💖</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Dancing+Script:wght@500;700&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink: #ffc0cb;
+    --blush: #f8a5c2;
+    --rose: #fcd5ce;
+    --deep-pink: #e8829a;
+    --gold: #f9d88c;
+    --gold-deep: #e0b84a;
+    --white: #fff9fb;
+    --glass: rgba(255,255,255,0.45);
+    --glass-border: rgba(255,182,193,0.6);
+    --shadow: rgba(232,130,154,0.25);
+    --text: #7a3b50;
+    --text-light: #b06080;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'Lato', sans-serif;
+    background: linear-gradient(135deg, #ffc0cb, #f8a5c2, #fcd5ce);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    color: var(--text);
+    user-select: none;
+  }
+
+  
+  .screen {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.7s ease;
+    padding: 20px;
+    overflow: hidden;
+  }
+  .screen.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  
+  .hearts-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+  }
+  .heart-float {
+    position: absolute;
+    font-size: 1.2rem;
+    animation: floatUp linear infinite;
+    opacity: 0.5;
+  }
+  @keyframes floatUp {
+    0%   { transform: translateY(110vh) scale(1) rotate(0deg); opacity:0.5; }
+    100% { transform: translateY(-15vh) scale(1.2) rotate(20deg); opacity:0; }
+  }
+
+  
+  .glass-card {
+    background: var(--glass);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1.5px solid var(--glass-border);
+    border-radius: 28px;
+    padding: 42px 50px;
+    box-shadow: 0 8px 40px var(--shadow), 0 2px 8px rgba(255,182,193,0.2);
+    position: relative;
+    z-index: 1;
+    max-width: 520px;
+    width: 100%;
+    text-align: center;
+  }
+
+  
+  .btn {
+    background: linear-gradient(135deg, var(--blush), var(--deep-pink));
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 14px 40px;
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.3rem;
+    cursor: pointer;
+    box-shadow: 0 6px 24px rgba(232,130,154,0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin-top: 24px;
+    letter-spacing: 0.5px;
+  }
+  .btn:hover { transform: translateY(-3px) scale(1.04); box-shadow: 0 10px 32px rgba(232,130,154,0.5); }
+  .btn:active { transform: scale(0.97); }
+
+  
+  h1 {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(2.4rem, 7vw, 4.2rem);
+    color: var(--text);
+    text-shadow: 0 2px 16px rgba(232,130,154,0.25);
+    line-height: 1.15;
+  }
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 4.5vw, 2.5rem);
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+  .subtitle {
+    font-family: 'Lato', sans-serif;
+    font-size: clamp(0.95rem, 2.5vw, 1.15rem);
+    color: var(--text-light);
+    margin-top: 10px;
+    font-weight: 300;
+  }
+
+  
+  .love-input {
+    width: 100%;
+    border: 2px solid var(--glass-border);
+    background: rgba(255,255,255,0.65);
+    border-radius: 50px;
+    padding: 14px 24px;
+    font-size: 1.05rem;
+    font-family: 'Lato', sans-serif;
+    color: var(--text);
+    outline: none;
+    margin-top: 20px;
+    text-align: center;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  .love-input:focus {
+    border-color: var(--blush);
+    box-shadow: 0 0 0 4px rgba(248,165,194,0.25);
+  }
+  .love-input::placeholder { color: #d4a0b0; }
+
+  
+  #s1 h1 { font-size: clamp(3rem, 10vw, 6rem); margin-bottom: 12px; }
+
+  
+  .envelope-wrap {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+  .envelope {
+    width: 260px;
+    height: 185px;
+    position: relative;
+    cursor: pointer;
+    filter: drop-shadow(0 12px 40px rgba(232,130,154,0.4));
+    animation: floatEnv 3s ease-in-out infinite;
+  }
+  @keyframes floatEnv {
+    0%,100%{ transform: translateY(0); }
+    50%{ transform: translateY(-10px); }
+  }
+  .envelope.opened { animation: none; }
+  .env-body {
+    position: absolute;
+    bottom: 0;
+    width: 260px;
+    height: 150px;
+    background: linear-gradient(160deg, #ffc0cb, #f8a5c2);
+    border-radius: 8px 8px 18px 18px;
+    box-shadow: 0 8px 32px rgba(232,130,154,0.3);
+    overflow: hidden;
+  }
+  .env-bottom {
+    position: absolute;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-left: 130px solid transparent;
+    border-right: 130px solid transparent;
+    border-bottom: 80px solid #f4a0ba;
+    z-index: 2;
+  }
+  .env-left {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-left: 130px solid #e890aa;
+    border-top: 75px solid transparent;
+    border-bottom: 75px solid transparent;
+    z-index: 2;
+  }
+  .env-right {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-right: 130px solid #e890aa;
+    border-top: 75px solid transparent;
+    border-bottom: 75px solid transparent;
+    z-index: 2;
+  }
+  .env-flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-left: 130px solid transparent;
+    border-right: 130px solid transparent;
+    border-top: 90px solid #f8a5c2;
+    transform-origin: top center;
+    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 5;
+  }
+  .env-flap.open { transform: rotateX(180deg); }
+  .env-seal {
+    position: absolute;
+    top: 72px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.8rem;
+    z-index: 6;
+    transition: transform 0.3s, opacity 0.3s;
+  }
+  .env-seal.pop {
+    animation: sealPop 0.4s ease forwards;
+  }
+  @keyframes sealPop {
+    0%  { transform: translateX(-50%) scale(1); }
+    50% { transform: translateX(-50%) scale(1.6); opacity: 0.5; }
+    100%{ transform: translateX(-50%) scale(0); opacity: 0; }
+  }
+
+  
+  .money-card {
+    width: 240px;
+    background: linear-gradient(135deg, #fff9fb, #fce4ec);
+    border: 2px solid var(--gold);
+    border-radius: 18px;
+    padding: 28px 20px;
+    text-align: center;
+    box-shadow: 0 8px 40px rgba(232,130,154,0.3), 0 0 0 4px rgba(249,216,140,0.2);
+    opacity: 0;
+    transform: translateY(30px) scale(0.85);
+    transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.5s ease;
+    position: absolute;
+    bottom: -240px;
+    left: 50%;
+    transform: translateX(-50%) translateY(0) scale(0.85);
+    z-index: 10;
+  }
+  .money-card.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-270px) scale(1);
+  }
+  .money-card .amount {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2rem;
+    color: var(--deep-pink);
+    font-weight: 700;
+    text-shadow: 0 2px 10px rgba(232,130,154,0.3);
+  }
+  .money-card .note {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-top: 6px;
+    font-style: italic;
+  }
+  .gold-stars {
+    font-size: 1.4rem;
+    margin-bottom: 8px;
+    animation: sparkleAnim 1.5s infinite alternate;
+  }
+  @keyframes sparkleAnim {
+    from { transform: scale(1); filter: brightness(1); }
+    to   { transform: scale(1.15); filter: brightness(1.3); }
+  }
+
+  
+  .memories-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    max-width: 680px;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 16px;
+  }
+  .mem-img {
+    position: relative;
+    border-radius: 18px;
+    overflow: hidden;
+    aspect-ratio: 1/1;
+    cursor: pointer;
+    box-shadow: 0 4px 18px rgba(232,130,154,0.3);
+    border: 2px solid rgba(255,182,193,0.5);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .mem-img:hover { transform: scale(1.05); box-shadow: 0 8px 32px rgba(232,130,154,0.5); }
+  .mem-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: filter 0.3s, transform 0.3s;
+    display: block;
+  }
+  .mem-img:hover img { filter: blur(2px) brightness(0.85); transform: scale(1.08); }
+  .mem-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(248,165,194,0.75), rgba(252,213,206,0.75));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+    padding: 10px;
+  }
+  .mem-img:hover .mem-overlay { opacity: 1; }
+  .mem-caption {
+    color: white;
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.1rem;
+    text-shadow: 0 2px 8px rgba(120,50,70,0.4);
+    text-align: center;
+  }
+
+  
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(255,192,203,0.6);
+    backdrop-filter: blur(16px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  .lightbox.open { opacity: 1; pointer-events: all; }
+  .lightbox img {
+    max-width: 88vw;
+    max-height: 80vh;
+    border-radius: 22px;
+    box-shadow: 0 20px 80px rgba(232,130,154,0.5);
+    border: 3px solid rgba(255,255,255,0.7);
+  }
+  .lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 28px;
+    font-size: 2.5rem;
+    cursor: pointer;
+    color: var(--deep-pink);
+    background: rgba(255,255,255,0.7);
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 16px rgba(232,130,154,0.3);
+  }
+
+  
+  .love-lines { margin: 20px 0; }
+  .love-line {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.15rem, 3vw, 1.55rem);
+    color: var(--text);
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.4s, transform 0.4s;
+    padding: 6px 0;
+    font-style: italic;
+  }
+  .love-line.visible { opacity: 1; transform: translateY(0); }
+  .love-line span { color: var(--deep-pink); }
+
+  
+  .heart-canvas {
+    position: absolute;
+    inset: 0;
+    pointer-events: all;
+    z-index: 1;
+    cursor: crosshair;
+  }
+  .click-heart {
+    position: absolute;
+    pointer-events: none;
+    font-size: 2rem;
+    animation: heartPop 1.1s ease forwards;
+    z-index: 3;
+  }
+  .click-msg {
+    position: absolute;
+    pointer-events: none;
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.1rem;
+    color: var(--deep-pink);
+    font-weight: 700;
+    animation: msgFade 1.3s ease forwards;
+    z-index: 4;
+    white-space: nowrap;
+    text-shadow: 0 2px 8px rgba(232,130,154,0.3);
+  }
+  @keyframes heartPop {
+    0%   { transform: scale(0) rotate(-10deg); opacity: 1; }
+    50%  { transform: scale(1.4) rotate(5deg); opacity: 1; }
+    100% { transform: scale(1) translateY(-60px) rotate(-5deg); opacity: 0; }
+  }
+  @keyframes msgFade {
+    0%   { opacity: 0; transform: translateY(0); }
+    20%  { opacity: 1; }
+    80%  { opacity: 1; transform: translateY(-40px); }
+    100% { opacity: 0; transform: translateY(-70px); }
+  }
+  .screen8-hint {
+    position: relative;
+    z-index: 2;
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.6rem;
+    color: var(--text);
+    text-shadow: 0 2px 12px rgba(255,255,255,0.7);
+    margin-bottom: 8px;
+    pointer-events: none;
+  }
+  #s8-btn {
+    position: relative;
+    z-index: 2;
+    pointer-events: all;
+  }
+
+  
+  .big-heart {
+    font-size: clamp(5rem, 20vw, 9rem);
+    animation: heartbeat 1.1s ease-in-out infinite;
+    display: block;
+    line-height: 1;
+    filter: drop-shadow(0 0 30px rgba(232,130,154,0.7));
+  }
+  @keyframes heartbeat {
+    0%,100%{ transform: scale(1); }
+    14%    { transform: scale(1.18); }
+    28%    { transform: scale(1); }
+    42%    { transform: scale(1.12); }
+  }
+  .surprise-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1rem, 2.8vw, 1.45rem);
+    color: var(--text);
+    text-align: center;
+    line-height: 1.8;
+    margin: 22px 0;
+    font-style: italic;
+  }
+
+  
+  #s10 h1 { font-size: clamp(2.5rem, 8vw, 5rem); }
+  .end-forever {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(1.3rem, 4vw, 2.2rem);
+    color: var(--text-light);
+    margin-top: 12px;
+  }
+
+  
+  .confetti-piece {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: confettiFall linear infinite;
+    z-index: 0;
+  }
+  @keyframes confettiFall {
+    0%   { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(110vh) rotate(540deg); opacity: 0.2; }
+  }
+
+  
+  .sparkle {
+    position: absolute;
+    pointer-events: none;
+    font-size: 1rem;
+    animation: sparkleTwinkle 2s ease-in-out infinite;
+    z-index: 1;
+    opacity: 0.7;
+  }
+  @keyframes sparkleTwinkle {
+    0%,100%{ transform: scale(1) rotate(0deg); opacity: 0.7; }
+    50%    { transform: scale(1.5) rotate(15deg); opacity: 1; }
+  }
+
+  
+  .music-btn {
+    position: fixed;
+    top: 18px;
+    right: 18px;
+    z-index: 1000;
+    background: rgba(255,255,255,0.5);
+    border: 1.5px solid var(--glass-border);
+    border-radius: 50%;
+    width: 46px; height: 46px;
+    font-size: 1.3rem;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 16px var(--shadow);
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.2s;
+  }
+  .music-btn:hover { transform: scale(1.1); }
+
+  
+  .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(248,165,194,0.4);
+    transform: scale(0);
+    animation: rippleOut 0.7s ease forwards;
+    pointer-events: none;
+  }
+  @keyframes rippleOut {
+    to { transform: scale(4); opacity: 0; }
+  }
+
+  
+  .personal-name {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    color: var(--deep-pink);
+  }
+  .personal-msg {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    color: var(--text-light);
+    font-size: 1.05rem;
+    margin-top: 10px;
+  }
+
+  
+  @media (max-width: 600px) {
+    .glass-card { padding: 28px 24px; }
+    .memories-grid { grid-template-columns: repeat(2, 1fr); gap: 9px; max-width: 98vw; }
+    .money-card { width: 200px; }
+    .money-card.show { transform: translateX(-50%) translateY(-225px) scale(1); }
+  }
+
+  
+  @keyframes musicPulse {
+    0%,100%{ transform: scale(1) rotate(-5deg); }
+    50%    { transform: scale(1.2) rotate(5deg); }
+  }
+  .music-playing { animation: musicPulse 0.8s infinite; }
+
+  
+  .label-q {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    color: var(--text-light);
+    margin-bottom: 2px;
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+
+
+<button class="music-btn" id="musicBtn" title="Toggle Music">🎵</button>
+
+
+<div class="lightbox" id="lightbox">
+  <span class="lightbox-close" id="lbClose">✕</span>
+  <img id="lbImg" src="" alt="Memory">
+</div>
+
+
+<section class="screen active" id="s1">
+  <div class="hearts-bg" id="hb1"></div>
+  <div class="glass-card" style="text-align:center;">
+    <h1>Eid Mubarak 💖</h1>
+    <p class="subtitle" style="font-size:1.15rem; margin-top:14px;">I made something special just for you…</p>
+    <button class="btn" onclick="goTo(2)">Start ❤️</button>
+  </div>
+</section>
+
+
+<section class="screen" id="s2">
+  <div class="hearts-bg" id="hb2"></div>
+  <div class="glass-card">
+    <h2>✨ Your Beautiful Name?</h2>
+    <p class="subtitle">Tell me, so I can make this extra special…</p>
+    <input class="love-input" id="nameInput" type="text" placeholder="Enter your name 💕" maxlength="30">
+    <button class="btn" onclick="submitName()">Continue 💕</button>
+  </div>
+</section>
+
+
+<section class="screen" id="s3">
+  <div class="hearts-bg" id="hb3"></div>
+  <div class="glass-card">
+    <h2>💸 Kitni Eidi Chahiye?</h2>
+    <p class="subtitle">Don't be shy… I'm listening 😏</p>
+    <input class="love-input" id="eidiInput" type="number" placeholder="Amount in PKR 💰" min="1" style="margin-top:20px;">
+    <button class="btn" onclick="submitEidi()">Let's See 💸</button>
+  </div>
+</section>
+
+
+<section class="screen" id="s4">
+  <div class="hearts-bg" id="hb4"></div>
+  <div class="glass-card">
+    <div class="personal-name" id="s4name">Eid Mubarak, Love ❤️</div>
+    <p class="personal-msg">You deserve all the happiness in the world 🌸</p>
+    <div style="font-size:2.5rem; margin:18px 0;">🌙✨💐</div>
+    <button class="btn" onclick="goTo(5)">Open Your Eidi ✉️</button>
+  </div>
+</section>
+
+
+<section class="screen" id="s5">
+  <div class="hearts-bg" id="hb5"></div>
+  <div style="text-align:center; position:relative; z-index:1;">
+    <h2 style="margin-bottom:8px;">Your Eidi is Here! 💌</h2>
+    <p class="subtitle" style="margin-bottom:28px;">Tap the envelope to open it 💕</p>
+  </div>
+  <div class="envelope-wrap">
+    <div class="envelope" id="envelope" onclick="openEnvelope()">
+      <div class="env-body">
+        <div class="env-bottom"></div>
+        <div class="env-left"></div>
+        <div class="env-right"></div>
+      </div>
+      <div class="env-flap" id="envFlap"></div>
+      <div class="env-seal" id="envSeal">❤️</div>
+    </div>
+    <div class="money-card" id="moneyCard">
+      <div class="gold-stars">✨💛✨</div>
+      <div class="amount" id="eidiAmount">PKR 5,000 💸</div>
+      <div class="note">Only for you ❤️<br>With all my love 🌹</div>
+    </div>
+  </div>
+  <div id="sparkleZone" style="position:absolute;inset:0;pointer-events:none;z-index:0;"></div>
+  <button class="btn" id="s5btn" style="display:none;margin-top:200px;position:relative;z-index:2;" onclick="goTo(6)">See Our Memories 💞</button>
+</section>
+
+
+<section class="screen" id="s6">
+  <div class="hearts-bg" id="hb6"></div>
+  <h2 style="position:relative;z-index:1;margin-bottom:14px;font-size:clamp(1.4rem,4vw,2rem);">Our Memories 💞</h2>
+  <div class="memories-grid" id="memoriesGrid"></div>
+  <button class="btn" style="position:relative;z-index:1;" onclick="goTo(7)">Read My Heart 💌</button>
+</section>
+
+
+<section class="screen" id="s7">
+  <div class="hearts-bg" id="hb7"></div>
+  <div class="glass-card" style="max-width:480px;">
+    <h2 style="font-size:clamp(1.3rem,4vw,1.9rem);">💌 From My Heart</h2>
+    <div class="love-lines" id="loveLines">
+      <p class="love-line">You are my <span>peace</span>.</p>
+      <p class="love-line">My <span>happiness</span>.</p>
+      <p class="love-line">My favorite <span>person</span> ❤️</p>
+      <p class="love-line">Every moment with you is a <span>blessing</span>.</p>
+      <p class="love-line">This Eid, I'm grateful for <span>you</span> 🌙</p>
+    </div>
+    <button class="btn" onclick="goTo(8)">Tap Hearts ❤️</button>
+  </div>
+</section>
+
+
+<section class="screen" id="s8">
+  <div class="hearts-bg" id="hb8"></div>
+  <div class="heart-canvas" id="heartCanvas" onclick="spawnHeart(event)"></div>
+  <p class="screen8-hint">💗 Tap anywhere to spread love!</p>
+  <button class="btn" id="s8-btn" onclick="goTo(9)">Final Surprise 🎁</button>
+</section>
+
+
+<section class="screen" id="s9">
+  <div id="confettiZone" style="position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden;"></div>
+  <div class="glass-card" style="position:relative;z-index:1;max-width:500px;">
+    <span class="big-heart">💖</span>
+    <p class="surprise-text">
+      I don't just give you Eidi…<br>
+      I give you my heart <span style="color:var(--deep-pink);">forever</span> ❤️
+    </p>
+    <button class="btn" onclick="goTo(10)">To Our Forever 💕</button>
+  </div>
+</section>
+
+
+<section class="screen" id="s10">
+  <div class="hearts-bg" id="hb10"></div>
+  <div class="glass-card" style="text-align:center;max-width:480px;">
+    <h1>Happy Eid,<br>My Love ❤️</h1>
+    <p class="end-forever">Forever Yours 💕</p>
+    <div style="font-size:2.2rem;margin:20px 0;animation:heartbeat 1.1s ease-in-out infinite;">💖</div>
+    <p class="subtitle">May every Eid bring us closer 🌙</p>
+    <button class="btn" onclick="goTo(1)">Relive It Again 🔁</button>
+  </div>
+</section>
+
+
+<audio id="bgMusic" loop>
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+let userName = 'My Love', eidiAmount = '1,000';
+let currentScreen = 1;
+let musicOn = false;
+let envelopeOpened = false;
+
+const bgMusic = document.getElementById('bgMusic');
+const musicBtn = document.getElementById('musicBtn');
+bgMusic.volume = 0.3;
+
+let audioCtx = null;
+function playClick() {
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain); gain.connect(audioCtx.destination);
+    osc.frequency.setValueAtTime(880, audioCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(440, audioCtx.currentTime + 0.1);
+    gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.15);
+    osc.start(); osc.stop(audioCtx.currentTime + 0.15);
+  } catch(e) {}
+}
+
+musicBtn.onclick = () => {
+  musicOn = !musicOn;
+  if (musicOn) {
+    bgMusic.play().catch(()=>{});
+    musicBtn.textContent = '🎶';
+    musicBtn.classList.add('music-playing');
+  } else {
+    bgMusic.pause();
+    musicBtn.textContent = '🎵';
+    musicBtn.classList.remove('music-playing');
+  }
+};
+
+function goTo(n) {
+  playClick();
+  document.querySelector(`#s${currentScreen}`).classList.remove('active');
+  currentScreen = n;
+  const next = document.querySelector(`#s${n}`);
+  next.classList.add('active');
+  onScreenEnter(n);
+}
+
+function onScreenEnter(n) {
+  if (n === 4) {
+    document.getElementById('s4name').textContent = `Eid Mubarak, ${userName} ❤️`;
+  }
+  if (n === 5) {
+    document.getElementById('eidiAmount').textContent = `PKR ${eidiAmount} 💸`;
+    envelopeOpened = false;
+    document.getElementById('envFlap').classList.remove('open');
+    document.getElementById('envSeal').classList.remove('pop');
+    document.getElementById('envSeal').style.opacity = '1';
+    document.getElementById('envSeal').style.transform = 'translateX(-50%)';
+    document.getElementById('moneyCard').classList.remove('show');
+    document.getElementById('s5btn').style.display = 'none';
+    document.getElementById('envelope').style.pointerEvents = 'all';
+  }
+  if (n === 6) buildMemories();
+  if (n === 7) animateLoveLines();
+  if (n === 9) buildConfetti();
+  generateHearts('hb'+n);
+}
+
+function submitName() {
+  const val = document.getElementById('nameInput').value.trim();
+  if (val) userName = val;
+  playClick();
+  goTo(3);
+}
+function submitEidi() {
+  const val = document.getElementById('eidiInput').value.trim();
+  if (val && !isNaN(val)) {
+    eidiAmount = Number(val).toLocaleString('en-PK');
+  }
+  playClick();
+  goTo(4);
+}
+
+document.getElementById('nameInput').addEventListener('keydown', e => { if(e.key==='Enter') submitName(); });
+document.getElementById('eidiInput').addEventListener('keydown', e => { if(e.key==='Enter') submitEidi(); });
+
+function openEnvelope() {
+  if (envelopeOpened) return;
+  envelopeOpened = true;
+  playClick();
+  const seal = document.getElementById('envSeal');
+  const flap = document.getElementById('envFlap');
+  seal.classList.add('pop');
+  setTimeout(() => {
+    flap.classList.add('open');
+  }, 350);
+  setTimeout(() => {
+    document.getElementById('moneyCard').classList.add('show');
+    launchSparkles();
+  }, 900);
+  setTimeout(() => {
+    document.getElementById('s5btn').style.display = 'inline-block';
+    document.getElementById('envelope').style.pointerEvents = 'none';
+  }, 1200);
+}
+
+function launchSparkles() {
+  const zone = document.getElementById('sparkleZone');
+  const emojis = ['✨','🌟','💫','⭐','💖','🌸'];
+  for(let i=0;i<18;i++) {
+    const s = document.createElement('div');
+    s.classList.add('sparkle');
+    s.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+    s.style.left = (10+Math.random()*80)+'%';
+    s.style.top  = (10+Math.random()*80)+'%';
+    s.style.animationDelay = (Math.random()*0.8)+'s';
+    s.style.fontSize = (0.9+Math.random()*0.8)+'rem';
+    zone.appendChild(s);
+  }
+}
+
+const memData = [
+  { url:'https://i.pinimg.com/1200x/64/f6/5e/64f65e3e5555b6e1a719b33d01551878.jpg', cap:'Our Smile 😊' },
+  { url:'https://i.pinimg.com/1200x/f5/80/b2/f580b2291d84271201bfd6edb288365d.jpg', cap:'That Beautiful Day' },
+  { url:'https://i.pinimg.com/736x/d6/74/cb/d674cbb2c3dc434874258b7a7d6b785f.jpg', cap:'My Favorite Place is You' },
+  { url:'https://i.pinimg.com/1200x/e2/f1/c7/e2f1c794d60e2b4b2df146ae27f883a2.jpg', cap:'Forever Moments' },
+  { url:'https://i.pinimg.com/736x/ec/7c/4d/ec7c4d7d1efc2c0f65ba06896ad36e8b.jpg', cap:'You & Me ❤️' },
+  { url:'https://i.pinimg.com/736x/4b/56/dc/4b56dc025119d503fc9abc08218d5875.jpg', cap:'Always Together 💕' },
+];
+
+function buildMemories() {
+  const grid = document.getElementById('memoriesGrid');
+  if (grid.children.length > 0) return;
+  memData.forEach((m, i) => {
+    const div = document.createElement('div');
+    div.className = 'mem-img';
+    div.innerHTML = `<img src="${m.url}" loading="lazy" alt="Memory ${i+1}">
+                     <div class="mem-overlay"><span class="mem-caption">${m.cap}</span></div>`;
+    div.onclick = () => openLightbox(m.url);
+    grid.appendChild(div);
+  });
+}
+
+function openLightbox(src) {
+  playClick();
+  document.getElementById('lbImg').src = src;
+  document.getElementById('lightbox').classList.add('open');
+}
+document.getElementById('lbClose').onclick = () => {
+  document.getElementById('lightbox').classList.remove('open');
+};
+document.getElementById('lightbox').onclick = (e) => {
+  if (e.target === document.getElementById('lightbox'))
+    document.getElementById('lightbox').classList.remove('open');
+};
+
+function animateLoveLines() {
+  const lines = document.querySelectorAll('.love-line');
+  lines.forEach(l => l.classList.remove('visible'));
+  lines.forEach((l, i) => {
+    setTimeout(() => l.classList.add('visible'), i * 320 + 200);
+  });
+}
+
+const loveMessages = [
+  '❤️ I love you', '😍 You are mine', '💕 Always yours',
+  '💖 My everything', '🥰 My heart', '✨ You\'re magic'
+];
+
+function spawnHeart(e) {
+  playClick();
+  const canvas = document.getElementById('heartCanvas');
+  const x = e.clientX; const y = e.clientY;
+
+  const rip = document.createElement('div');
+  rip.className = 'ripple';
+  rip.style.cssText = `left:${x}px;top:${y}px;width:60px;height:60px;margin-left:-30px;margin-top:-30px;`;
+  canvas.appendChild(rip);
+  setTimeout(() => rip.remove(), 800);
+
+  const h = document.createElement('div');
+  h.className = 'click-heart';
+  h.textContent = ['💖','💗','💓','💝','🌸','✨'][Math.floor(Math.random()*6)];
+  h.style.cssText = `left:${x-16}px;top:${y-16}px;`;
+  canvas.appendChild(h);
+  setTimeout(() => h.remove(), 1200);
+
+  const msg = document.createElement('div');
+  msg.className = 'click-msg';
+  msg.textContent = loveMessages[Math.floor(Math.random()*loveMessages.length)];
+  msg.style.cssText = `left:${x-60}px;top:${y-50}px;`;
+  canvas.appendChild(msg);
+  setTimeout(() => msg.remove(), 1400);
+}
+
+function buildConfetti() {
+  const zone = document.getElementById('confettiZone');
+  if (zone.children.length > 0) return;
+  const colors = ['#ffc0cb','#f8a5c2','#fcd5ce','#f9d88c','#fff','#e8829a','#ffb3c6'];
+  for (let i=0;i<50;i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti-piece';
+    c.style.left = Math.random()*100+'%';
+    c.style.background = colors[Math.floor(Math.random()*colors.length)];
+    c.style.animationDuration = (3+Math.random()*4)+'s';
+    c.style.animationDelay = (Math.random()*4)+'s';
+    c.style.width = c.style.height = (6+Math.random()*8)+'px';
+    c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    zone.appendChild(c);
+  }
+}
+
+function generateHearts(containerId) {
+  const container = document.getElementById(containerId);
+  if (!container || container.children.length > 0) return;
+  const emojis = ['💖','💗','🌸','✨','💕','💓','🌹','⭐'];
+  for (let i=0;i<14;i++) {
+    const h = document.createElement('div');
+    h.className = 'heart-float';
+    h.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+    h.style.left = (Math.random()*96)+'%';
+    h.style.animationDuration = (6+Math.random()*8)+'s';
+    h.style.animationDelay = (Math.random()*6)+'s';
+    h.style.fontSize = (0.8+Math.random()*1.2)+'rem';
+    container.appendChild(h);
+  }
+}
+
+generateHearts('hb1');
+</script>
+</body>
+</html>
+
+
+
+
